@@ -20,14 +20,14 @@ function Stats() {
 						value: 16,
 						label: 'Personal Projects',
 					},
-					{
-						icon: <Coffee className='h-8 w-8 text-primary' />,
-						value: 730,
-						label: 'Coffee Cups',
-					},
+					// {
+					// 	icon: <Coffee className='h-8 w-8 text-primary' />,
+					// 	value: 730,
+					// 	label: 'Coffee Cups',
+					// },
 					{
 						icon: <Clock className='h-8 w-8 text-primary' />,
-						value: 2,
+						value: 1.5,
 						label: 'Years Experience',
 					},
 				].map((stat, index) => (
