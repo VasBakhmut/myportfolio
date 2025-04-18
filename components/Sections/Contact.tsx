@@ -1,4 +1,6 @@
-import React from 'react'
+'use client'
+
+import React, { useState } from 'react'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
@@ -8,6 +10,38 @@ import { Card3D } from '@/components/card-3d'
 import { Mail, Github, Linkedin, Send } from 'lucide-react'
 
 function Contact() {
+	const [status, setStatus] = useState<'idle' | 'sending' | 'sent' | 'error'>(
+		'idle'
+	)
+
+	const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+		e.preventDefault()
+		setStatus('sending')
+
+		const form = e.currentTarget
+		const data = {
+			name: form.name.value,
+			email: form.email.value,
+			subject: form.subject.value,
+			message: form.message.value,
+		}
+
+		const res = await fetch('https://formspree.io/f/mgvajkry', {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json',
+			},
+			body: JSON.stringify(data),
+		})
+
+		if (res.ok) {
+			setStatus('sent')
+			form.reset()
+		} else {
+			setStatus('error')
+		}
+	}
+
 	return (
 		<section id='contact' className='py-12 md:py-24 scroll-mt-16'>
 			<div className='space-y-8'>
@@ -27,7 +61,7 @@ function Contact() {
 									<CardTitle>Send a Message</CardTitle>
 								</CardHeader>
 								<CardContent>
-									<form className='space-y-4'>
+									<form onSubmit={handleSubmit} className='space-y-4'>
 										<div className='grid grid-cols-2 gap-4'>
 											<div className='space-y-2'>
 												<label htmlFor='name' className='text-sm font-medium'>
@@ -35,8 +69,9 @@ function Contact() {
 												</label>
 												<Input
 													id='name'
+													name='name'
+													required
 													placeholder='Your name'
-													className='transition-all focus:ring-2 focus:ring-primary'
 												/>
 											</div>
 											<div className='space-y-2'>
@@ -45,9 +80,10 @@ function Contact() {
 												</label>
 												<Input
 													id='email'
+													name='email'
 													type='email'
+													required
 													placeholder='Your email'
-													className='transition-all focus:ring-2 focus:ring-primary'
 												/>
 											</div>
 										</div>
@@ -57,8 +93,9 @@ function Contact() {
 											</label>
 											<Input
 												id='subject'
+												name='subject'
+												required
 												placeholder='Subject'
-												className='transition-all focus:ring-2 focus:ring-primary'
 											/>
 										</div>
 										<div className='space-y-2'>
@@ -67,9 +104,10 @@ function Contact() {
 											</label>
 											<Textarea
 												id='message'
-												placeholder='Your message'
+												name='message'
 												rows={5}
-												className='transition-all focus:ring-2 focus:ring-primary'
+												required
+												placeholder='Your message'
 											/>
 										</div>
 										<Button
@@ -77,13 +115,22 @@ function Contact() {
 											className='w-full transition-transform hover:scale-[1.02] group'
 										>
 											<Send className='h-4 w-4 mr-2 transition-transform group-hover:translate-x-1' />
-											Send Message
+											{status === 'sending' ? 'Sending...' : 'Send Message'}
 										</Button>
+										{status === 'sent' && (
+											<p className='text-green-500 text-sm'>Message sent ✅</p>
+										)}
+										{status === 'error' && (
+											<p className='text-red-500 text-sm'>
+												Something went wrong ❌
+											</p>
+										)}
 									</form>
 								</CardContent>
 							</Card>
 						</Card3D>
 					</AnimateInView>
+
 					<div className='space-y-6'>
 						<AnimateInView delay={0.1}>
 							<Card className='transition-all hover:shadow-md'>
