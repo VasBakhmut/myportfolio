@@ -20,11 +20,11 @@ function Stats() {
 						value: 16,
 						label: 'Personal Projects',
 					},
-					// {
-					// 	icon: <Coffee className='h-8 w-8 text-primary' />,
-					// 	value: 730,
-					// 	label: 'Coffee Cups',
-					// },
+					{
+						icon: <Coffee className='h-8 w-8 text-primary' />,
+						value: 25,
+						label: 'GitHub Repositories',
+					},
 					{
 						icon: <Clock className='h-8 w-8 text-primary' />,
 						value: 1.5,
