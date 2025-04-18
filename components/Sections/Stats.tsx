@@ -1,5 +1,5 @@
 import React from 'react'
-import { CheckCircle, Coffee, Clock, FileCode } from 'lucide-react'
+import { CheckCircle, Coffee, Clock, FileCode, BookDown } from 'lucide-react'
 import { Card, CardContent } from '@/components/ui/card'
 
 import { Card3D } from '@/components/card-3d'
@@ -21,7 +21,7 @@ function Stats() {
 						label: 'Personal Projects',
 					},
 					{
-						icon: <Coffee className='h-8 w-8 text-primary' />,
+						icon: <BookDown className='h-8 w-8 text-primary' />,
 						value: 25,
 						label: 'GitHub Repositories',
 					},
